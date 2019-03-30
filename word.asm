@@ -18,7 +18,7 @@ _start:
                 mov             rdi, rax
 
                 xor             rbx, rbx
-		xor		r14, r14
+		mov		r14, 1
 
 .read_again:
                 xor             rax, rax
@@ -32,13 +32,7 @@ _start:
                 jg              read_fail
 
 .next_byte:
-                movzx           edx, byte [rsi + rax]
-                mov 		r15, rbx
-
-		jmp		.check
-
-.check:		
-		mov 		r15, rbx		
+                movzx           edx, byte [rsi + rax]	
 		
 		cmp		dl, 9
 		je		.inc_ans
@@ -58,10 +52,6 @@ _start:
 		cmp             dl, 32
                 je             	.inc_ans
 
-		cmp		rbx, r15
-		je		.clear
-
-.clear:	
 		xor		r14, r14
 
 .not_ws:
