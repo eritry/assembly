@@ -5,15 +5,18 @@ _start:
 
                 sub             rsp, 2 * 128 * 8
                 lea             rdi, [rsp + 128 * 8]
+
                 mov             rcx, 128
                 call            read_long
                 mov             rdi, rsp
+
                 call            read_long
                 lea             rsi, [rsp + 128 * 8]
 
 		mov		r8, rdi
-		mov 		rdi, rsi
-		mov		rsi, r8
+		mov		rdi, rsi
+		mov		rsi, r8		
+		
                 call            sub_long_long
 
                 call            write_long
@@ -33,18 +36,12 @@ sub_long_long:
                 push            rdi
                 push            rsi
                 push            rcx
-		mov		rax, [rsi]
-		lea		rsi, [rsi + 8]
-		sbb		[rdi], rax
-		lea		rdi, [rdi + 8]
-		dec 		rcx
-		jnz		.loop
 
                 clc
 .loop:
                 mov             rax, [rsi]
                 lea             rsi, [rsi + 8]
-                adc             [rdi], rax
+                sbb             [rdi], rax
                 lea             rdi, [rdi + 8]
                 dec             rcx
                 jnz             .loop
