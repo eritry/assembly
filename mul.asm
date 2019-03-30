@@ -92,6 +92,31 @@ mul_long_long:
 
                 ret
 
+; adds two long number
+;    rdi -- address of summand #1 (long number)
+;    rsi -- address of summand #2 (long number)
+;    rcx -- length of long numbers in qwords
+; result:
+;    sum is written to rdi
+add_long_long:
+                push            rdi
+                push            rsi
+                push            rcx
+
+                clc
+.loop:
+                mov             rax, [rsi]
+                lea             rsi, [rsi + 8]
+                adc             [rdi], rax
+                lea             rdi, [rdi + 8]
+                dec             rcx
+                jnz             .loop
+
+                pop             rcx
+                pop             rsi
+                pop             rdi
+                ret
+
 ; adds 64-bit number to long number
 ;    rdi -- address of summand #1 (long number)
 ;    rax -- summand #2 (64-bit unsigned)
